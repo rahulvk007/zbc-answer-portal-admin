@@ -34,6 +34,7 @@ db.init_app(app)
 
 # Define mongoengine documents
 class Users(db.Document):
+    email = db.EmailField()
     name = db.StringField(max_length=40)
     password = db.StringField(max_length=40)
     answer_status = db.BooleanField()
