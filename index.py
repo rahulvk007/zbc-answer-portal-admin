@@ -18,10 +18,8 @@ db = cluster["answer-portal"]
 user_collection = db["users"]
 
 
-# Create application
 app = Flask(__name__)
 
-# Create dummy secrey key so we can use sessions
 app.config['SECRET_KEY'] = '123456790'
 app.config['MONGODB_SETTINGS'] = {
     'host':'mongodb+srv://rahulvk:rvk4551@cluster0.c8dkc.mongodb.net/answer-portal?retryWrites=true&w=majority'
@@ -32,13 +30,13 @@ db = MongoEngine()
 db.init_app(app)
 
 
-# Define mongoengine documents
 class Users(db.Document):
     email = db.EmailField()
     name = db.StringField(max_length=40)
     password = db.StringField(max_length=40)
     answer_status = db.BooleanField()
     score = db.IntField()
+    time = db.StringField(max_length=20)
     def __unicode__(self):
         return self.name
 
@@ -85,8 +83,6 @@ app.secret_key = 'supersecret'
 
 admin = admin.Admin(app, 'ZBC Answer Portal')
 
-    # Add views
 admin.add_view(MyModelView(Users))
 admin.add_view(MyModelView(Answers))
-    # Start app
 
